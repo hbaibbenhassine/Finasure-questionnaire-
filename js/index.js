@@ -49,7 +49,7 @@
     state.startedAt = state.startedAt || new Date().toISOString();
 
     if (!window.FinasureStorage.save(state)) {
-      showFieldError("email", "Impossible d’enregistrer vos informations pour le moment.");
+      showFieldError("email", "Impossible d’enregistrer vos informations pour le moment..");
       return;
     }
     window.location.href = "questionnaire.html";
