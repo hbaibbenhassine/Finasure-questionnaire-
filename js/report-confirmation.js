@@ -6,7 +6,7 @@
     return;
   }
 
-  let seconds = 10;
+  let seconds = 15;
   const countdown = document.querySelector("#redirect-countdown");
   const redirectNotice = document.querySelector("#automatic-redirect");
   const timer = window.setInterval(() => {
