@@ -14,22 +14,22 @@
   const categoryDetails = Object.freeze({
     "strategie": {
       number: 1,
-      title: "Stratégie et appétit au risque",
+      title: "Stratégie ",
       description: "Cette catégorie évalue la manière dont les risques sont intégrés dans la définition de la stratégie, des objectifs annuels et dans les décisions budgétaires et d’investissement."
     },
     "gouvernance": {
       number: 2,
-      title: "Gouvernance et responsabilités",
+      title: "Gouvernance ",
       description: "Cette catégorie porte sur l’organisation de la gouvernance des risques, la fréquence des instances et la clarté des rôles, responsabilités et délégations."
     },
     "culture": {
       number: 3,
-      title: "Culture du risque",
+      title: "Culture ",
       description: "Cette catégorie évalue l’implication de la direction et la capacité des collaborateurs à faire remonter les risques et alertes dans un environnement approprié."
     },
     "identification-des-risques": {
       number: 4,
-      title: "Identification des risques",
+      title: "Identification ",
       description: "Cette catégorie examine la capacité de l’organisation à identifier régulièrement ses risques selon une méthode commune et à anticiper les risques émergents."
     },
     "analyse-et-evaluation-des-risques": {
@@ -44,12 +44,12 @@
     },
     "revue-et-revision": {
       number: 7,
-      title: "Revue et amélioration du dispositif",
+      title: "Revue et révision",
       description: "Cette catégorie examine la capacité de l’organisation à revoir périodiquement l’efficacité de son dispositif et à intégrer les enseignements tirés des incidents et interruptions."
     },
     "information-et-reporting": {
       number: 8,
-      title: "Information et reporting des risques",
+      title: "Information et reporting ",
       description: "Cette catégorie évalue la qualité des indicateurs de risque et la capacité à faire remonter l’information critique aux instances de décision dans les délais appropriés."
     },
     "continuite-d-activite-pca-pra": {
@@ -59,7 +59,7 @@
     },
     "gestion-de-crise-pgc": {
       number: 10,
-      title: "Dispositif de gestion de crise",
+      title: " gestion de crise",
       description: "Cette catégorie évalue le niveau de préparation de l’organisation à faire face à une crise grâce à un dispositif formalisé, des mécanismes d’alerte et des exercices réguliers."
     },
     "resilience-organisationnelle": {
