@@ -11,6 +11,63 @@
   const actions = document.querySelector(".questionnaire-actions");
   const totalQuestions = data?.questions?.length || 0;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const categoryDetails = Object.freeze({
+    "strategie": {
+      number: 1,
+      title: "Stratégie et appétit au risque",
+      description: "Cette catégorie évalue la manière dont les risques sont intégrés dans la définition de la stratégie, des objectifs annuels et dans les décisions budgétaires et d’investissement."
+    },
+    "gouvernance": {
+      number: 2,
+      title: "Gouvernance et responsabilités",
+      description: "Cette catégorie porte sur l’organisation de la gouvernance des risques, la fréquence des instances et la clarté des rôles, responsabilités et délégations."
+    },
+    "culture": {
+      number: 3,
+      title: "Culture du risque",
+      description: "Cette catégorie évalue l’implication de la direction et la capacité des collaborateurs à faire remonter les risques et alertes dans un environnement approprié."
+    },
+    "identification-des-risques": {
+      number: 4,
+      title: "Identification des risques",
+      description: "Cette catégorie examine la capacité de l’organisation à identifier régulièrement ses risques selon une méthode commune et à anticiper les risques émergents."
+    },
+    "analyse-et-evaluation-des-risques": {
+      number: 5,
+      title: "Analyse et évaluation des risques",
+      description: "Cette catégorie porte sur la méthodologie d’évaluation des risques, l’homogénéité des échelles utilisées et la distinction entre risque brut et risque résiduel."
+    },
+    "traitement-des-risques": {
+      number: 6,
+      title: "Traitement des risques",
+      description: "Cette catégorie évalue la capacité à définir, financer, suivre et tester les plans de traitement des risques significatifs."
+    },
+    "revue-et-revision": {
+      number: 7,
+      title: "Revue et amélioration du dispositif",
+      description: "Cette catégorie examine la capacité de l’organisation à revoir périodiquement l’efficacité de son dispositif et à intégrer les enseignements tirés des incidents et interruptions."
+    },
+    "information-et-reporting": {
+      number: 8,
+      title: "Information et reporting des risques",
+      description: "Cette catégorie évalue la qualité des indicateurs de risque et la capacité à faire remonter l’information critique aux instances de décision dans les délais appropriés."
+    },
+    "continuite-d-activite-pca-pra": {
+      number: 9,
+      title: "Continuité d’activité",
+      description: "Cette catégorie porte sur la capacité de l’organisation à maintenir ou reprendre ses activités critiques en cas d’interruption, notamment à travers le BIA, les RTO/RPO et les tests."
+    },
+    "gestion-de-crise-pgc": {
+      number: 10,
+      title: "Dispositif de gestion de crise",
+      description: "Cette catégorie évalue le niveau de préparation de l’organisation à faire face à une crise grâce à un dispositif formalisé, des mécanismes d’alerte et des exercices réguliers."
+    },
+    "resilience-organisationnelle": {
+      number: 11,
+      title: "Résilience organisationnelle",
+      description: "Cette catégorie examine la capacité de l’organisation à identifier ses dépendances critiques, à anticiper les points de défaillance et à intégrer la résilience dans les décisions structurantes."
+    }
+  });
   let isTransitioning = false;
   let transitionTimer = null;
 
@@ -66,7 +123,7 @@
     const meta = createElement(
       "p",
       "question-meta",
-      `Question ${question.id} · ${dimensionName(question.dimensionId)}`
+      `Question ${question.id}`
     );
     const title = createElement("h2", "question-title", question.text);
     title.id = `question-${question.id}`;
@@ -103,6 +160,28 @@
 
     card.append(meta, title, group);
     return card;
+  }
+
+  function createCategoryHeading(dimensionId) {
+    const details = categoryDetails[dimensionId] || {
+      number: "",
+      title: dimensionName(dimensionId),
+      description: ""
+    };
+    const section = createElement("section", "question-category");
+    section.dataset.dimension = dimensionId;
+    const heading = createElement(
+      "h2",
+      "question-category-title",
+      `${details.number}. ${details.title}`
+    );
+    const description = createElement(
+      "p",
+      "question-category-description",
+      details.description
+    );
+    section.append(heading, description);
+    return section;
   }
 
   function render() {
@@ -144,7 +223,14 @@
     );
 
     const fragment = document.createDocumentFragment();
-    questions.forEach((question) => fragment.append(createQuestionCard(question)));
+    let currentDimension = "";
+    questions.forEach((question) => {
+      if (question.dimensionId !== currentDimension) {
+        currentDimension = question.dimensionId;
+        fragment.append(createCategoryHeading(currentDimension));
+      }
+      fragment.append(createQuestionCard(question));
+    });
     list.replaceChildren(fragment);
 
     previous.hidden = false;
@@ -225,7 +311,7 @@
         if (stepComplete) {
           step += 1;
           render();
-          scrollToTarget(list.querySelector(".question-card"));
+          scrollToTarget(list.querySelector(".question-category"));
         }
         releaseTransition();
         return;

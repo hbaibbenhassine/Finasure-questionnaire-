@@ -41,6 +41,10 @@
 #questions-list{width:100%;margin-top:16px;padding:10px 0 24px;background:transparent;text-align:left}
 #questions-list .question-card{margin:0;padding:28px 0 4px;border:0;border-radius:0;background:transparent;box-shadow:none}
 #questions-list .question-card:first-child{margin-top:0}
+.question-category{margin:34px 0 2px;padding:0 0 16px;border-bottom:1px solid var(--line)}
+.question-category:first-child{margin-top:14px}
+.question-category-title{margin:0 0 7px;color:var(--navy);font:800 clamp(19px,2.2vw,26px)/1.25 "Manrope",sans-serif;letter-spacing:-.02em;text-transform:uppercase}
+.question-category-description{max-width:980px;margin:0;color:#5d7083;font-size:14px;line-height:1.6}
 .question-meta{display:none}
 .question-title{margin:0 0 14px;color:#111;font:500 19px/1.45 "DM Sans",sans-serif;letter-spacing:0}
 .question-title::after{content:" *";color:#d40000;font-weight:500}
@@ -64,7 +68,7 @@
 .questionnaire-confidentiality{max-width:980px!important;padding:11px 14px;border-left:3px solid var(--cyan);background:var(--cyan-light);color:var(--navy)!important;font-size:13px!important;line-height:1.55!important}
 .questionnaire-confidentiality strong{color:var(--navy)}
 @media(max-width:800px){.questionnaire-hero{grid-template-columns:1fr;gap:24px;padding:10px 0 26px}.questionnaire-hero h1{font-size:clamp(38px,10vw,56px)}.questionnaire-hero-copy>p:last-of-type{font-size:15px}.questionnaire-hero img{max-height:300px}.questionnaire-sticky-tools{top:72px}.questionnaire-benefits article{display:grid;justify-items:center;gap:4px;padding:4px 5px 9px;text-align:center}.questionnaire-benefits article:first-child{padding-left:5px}.questionnaire-benefits strong{font-size:9px}.questionnaire-benefits article div>span{display:none}.questionnaire-benefits .benefit-icon{width:28px;height:28px;flex-basis:28px}.questionnaire-benefits .benefit-icon svg{width:15px;height:15px}}
-@media(max-width:600px){.questionnaire-view{padding-left:18px;padding-right:18px}.questionnaire-hero h1{font-size:36px}.questionnaire-hero img{max-height:230px}.questionnaire-guidance{margin-top:18px;padding:21px 0 23px}.questionnaire-guidance h2{font-size:25px}.questionnaire-guidance p{font-size:14px;line-height:1.65}.questionnaire-confidentiality{padding:10px 12px;font-size:12px!important;line-height:1.5!important}#questions-list{padding:4px 0 20px}.question-title{font-size:16px;line-height:1.5}.answer-grid{gap:7px}.answer-option{grid-template-columns:17px minmax(0,1fr);gap:8px}.answer-option label{font-size:16px}}
+@media(max-width:600px){.questionnaire-view{padding-left:18px;padding-right:18px}.questionnaire-hero h1{font-size:36px}.questionnaire-hero img{max-height:230px}.questionnaire-guidance{margin-top:18px;padding:21px 0 23px}.questionnaire-guidance h2{font-size:25px}.questionnaire-guidance p{font-size:14px;line-height:1.65}.questionnaire-confidentiality{padding:10px 12px;font-size:12px!important;line-height:1.5!important}#questions-list{padding:4px 0 20px}.question-category{margin-top:28px;padding-bottom:13px}.question-category:first-child{margin-top:10px}.question-category-title{font-size:18px}.question-category-description{font-size:13px;line-height:1.55}.question-title{font-size:16px;line-height:1.5}.answer-grid{gap:7px}.answer-option{grid-template-columns:17px minmax(0,1fr);gap:8px}.answer-option label{font-size:16px}}
 
 /* Barre d’actions persistante de la page de résultats. */
 .full-report-page{padding-bottom:150px}
@@ -166,9 +170,9 @@
 @media(prefers-reduced-motion:reduce){.erm-stepper li.active .step-marker{animation:none}}
 @media(max-width:768px){.view-home .hero-grid{padding-top:52px;padding-bottom:46px}.home-final-cta{padding-top:28px;padding-bottom:46px}.questionnaire-view{padding-top:24px}.erm-stepper li{padding:0 2px;font-size:10px}.erm-stepper li::before{top:18px}.step-marker{width:38px;height:38px}.step-short-label{margin-top:6px}.progress-panel{margin-top:6px}}
 @media(max-width:390px){.erm-stepper li{font-size:9px}.step-marker{width:34px;height:34px}.erm-stepper li::before{top:16px}.step-short-label{letter-spacing:-.02em}}
-.question-card,.questionnaire-actions{scroll-margin-top:100px}
+.question-category,.question-card,.questionnaire-actions{scroll-margin-top:100px}
 .questionnaire-actions .button:disabled{cursor:not-allowed}
-@media(max-width:768px){html,body{max-width:100%;overflow-x:hidden}.question-card,.questionnaire-actions{scroll-margin-top:88px}}
+@media(max-width:768px){html,body{max-width:100%;overflow-x:hidden}.question-category,.question-card,.questionnaire-actions{scroll-margin-top:88px}}
 
 /* Niveaux de maturité partagés par le rapport web et le PDF. */
 .maturity-card{border-color:var(--level-border)}
