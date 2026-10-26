@@ -2,7 +2,8 @@
   "use strict";
 
   const STORAGE_KEY = "finasureLanguage";
-  const SUPPORTED = Object.freeze(["fr", "ar"]);
+  const AVAILABLE = Object.freeze(["fr", "ar"]);
+  const ENABLED = Object.freeze(["fr"]);
   const catalogs = window.FINASURE_I18N_CATALOGS || {};
   const queryLanguage = new URLSearchParams(location.search).get("lang");
   const storedLanguage = (() => {
@@ -10,11 +11,11 @@
     catch { return null; }
   })();
   const browserLanguage = String(navigator.language || "fr").toLowerCase().startsWith("ar") ? "ar" : "fr";
-  const locale = SUPPORTED.includes(queryLanguage)
+  const locale = ENABLED.includes(queryLanguage)
     ? queryLanguage
-    : SUPPORTED.includes(storedLanguage)
+    : ENABLED.includes(storedLanguage)
       ? storedLanguage
-      : browserLanguage;
+      : ENABLED.includes(browserLanguage) ? browserLanguage : "fr";
 
   function rememberLanguage(language) {
     try { localStorage.setItem(STORAGE_KEY, language); }
@@ -106,7 +107,8 @@
   function localizedUrl(input, language = locale) {
     const url = new URL(input, location.href);
     if (url.origin !== location.origin || !/\.html$/.test(url.pathname)) return input;
-    url.searchParams.set("lang", language);
+    if (language === "fr" || !ENABLED.includes(language)) url.searchParams.delete("lang");
+    else url.searchParams.set("lang", language);
     return `${url.pathname.split("/").pop()}${url.search}${url.hash}`;
   }
 
@@ -118,7 +120,7 @@
 
   function addSeoLinks() {
     const base = new URL(location.href);
-    ["fr", "ar"].forEach((language) => {
+    ENABLED.forEach((language) => {
       const link = document.createElement("link");
       link.rel = "alternate";
       link.hreflang = language;
@@ -149,11 +151,14 @@
   function addLanguageSwitcher() {
     const header = document.querySelector(".site-header");
     if (!header || header.querySelector(".language-switcher")) return;
+    if (ENABLED.length < 2) return;
     const switcher = document.createElement("div");
     switcher.className = "language-switcher";
     switcher.setAttribute("role", "group");
     switcher.setAttribute("aria-label", locale === "ar" ? "اختيار اللغة" : "Choisir la langue");
-    [{ code: "fr", label: "FR" }, { code: "ar", label: "العربية" }].forEach(({ code, label }) => {
+    [{ code: "fr", label: "FR" }, { code: "ar", label: "العربية" }]
+      .filter(({ code }) => ENABLED.includes(code))
+      .forEach(({ code, label }) => {
       const button = document.createElement("button");
       button.type = "button";
       button.lang = code;
@@ -168,7 +173,7 @@
         location.href = target.href;
       });
       switcher.append(button);
-    });
+      });
     const nav = header.querySelector(".main-nav");
     header.insertBefore(switcher, nav || null);
   }
@@ -177,6 +182,13 @@
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
     document.body?.classList.toggle("is-rtl", locale === "ar");
+  }
+
+  function normalizeCurrentUrl() {
+    if (!queryLanguage || ENABLED.includes(queryLanguage)) return;
+    const target = new URL(location.href);
+    target.searchParams.delete("lang");
+    history.replaceState(history.state, "", `${target.pathname}${target.search}${target.hash}`);
   }
 
   function formatDate(value, options) {
@@ -190,6 +202,7 @@
 
   function init() {
     applyDocumentLanguage();
+    normalizeCurrentUrl();
     addLanguageSwitcher();
     translateTree(document.body);
     localizeLinks();
@@ -214,6 +227,8 @@
   }
 
   window.FinasureI18n = Object.freeze({
+    availableLanguages: AVAILABLE,
+    enabledLanguages: ENABLED,
     locale,
     direction: locale === "ar" ? "rtl" : "ltr",
     isRtl: locale === "ar",

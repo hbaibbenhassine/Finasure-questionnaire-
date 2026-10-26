@@ -24,9 +24,11 @@ vm.runInContext(fs.readFileSync(path.join(root, "js/questionnaire-data.js"), "ut
 
 const catalog = context.window.FINASURE_I18N_CATALOGS.ar;
 const data = context.window.FINASURE_ERM_DATA;
+const runtime = fs.readFileSync(path.join(root, "js/i18n.js"), "utf8");
 
 assert(catalog && Object.keys(catalog).length > 100, "Le catalogue arabe doit être chargé et suffisamment complet.");
 assert.strictEqual(data.questions.length, 22, "Le questionnaire attendu contient 22 questions.");
+assert(runtime.includes('const ENABLED = Object.freeze(["fr"]);'), "L’arabe doit rester désactivé tant que la fonctionnalité est en pause.");
 data.questions.forEach((question) => {
   assert(catalog[question.text], `Traduction arabe manquante pour la question ${question.id}.`);
 });
