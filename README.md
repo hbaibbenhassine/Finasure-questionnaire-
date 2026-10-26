@@ -74,6 +74,24 @@ python -m http.server 8000
 
 Ouvrir `http://localhost:8000`.
 
+## Internationalisation
+
+Le site public est disponible en français (`fr`) et en arabe (`ar`). Le français reste la langue par défaut. Le choix est conservé dans `localStorage` sous la clé `finasureLanguage` et propagé dans les liens internes avec le paramètre `?lang=`.
+
+- `js/i18n.js` : détection de langue, traduction du DOM dynamique, sélecteur, formats locaux, liens localisés et balises `hreflang` ;
+- `js/i18n/ar.js` : catalogue arabe et recommandations localisées ;
+- `css/style.css` : mise en page RTL et styles du sélecteur de langue ;
+- `tests/validate-i18n.js` : contrôle de l’intégration et de la couverture du questionnaire.
+
+Pour ajouter une langue, créer son catalogue sur le modèle de `js/i18n/ar.js`, charger ce fichier avant `js/i18n.js`, puis ajouter son code dans `SUPPORTED` et dans le sélecteur du runtime. Les clés source françaises permettent de faire évoluer progressivement l’existant sans dupliquer les pages ni la logique métier.
+
+Tests rapides :
+
+```powershell
+node tests/validate-i18n.js
+node tests/validate-project.js
+```
+
 ## Limites avant production
 
 - importer les réponses exactes du classeur Excel ;

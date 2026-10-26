@@ -2,6 +2,9 @@
   "use strict";
 
   const calendarData = window.FinasureCalendarData;
+  const i18n = window.FinasureI18n;
+  const t = (value) => i18n?.t(value) || value;
+  const goTo = (url) => { location.href = i18n?.localizedUrl(url) || url; };
   const questionnaireData = window.FINASURE_ERM_DATA;
   const state = FinasureStorage.load();
   const form = document.querySelector("#appointment-form");
@@ -17,12 +20,12 @@
     return answer >= 1 && answer <= 5;
   });
   if (!assessmentComplete || !state.questionnaireCompleted) {
-    location.href = "questionnaire.html";
+    goTo("questionnaire.html");
     return;
   }
   const clientComplete = state.leadFormCompleted && state.client?.company && state.client?.sector && state.client?.workforce && state.client?.jobTitle && state.client?.firstName && state.client?.lastName && state.client?.email;
   if (!clientComplete) {
-    location.href = "resultats.html";
+    goTo("resultats.html");
     return;
   }
 
@@ -34,12 +37,13 @@
   }
 
   function formatLongDate(date) {
-    return date.toLocaleDateString("fr-FR", {
+    const options = {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric"
-    });
+    };
+    return i18n?.formatDate(date, options) || date.toLocaleDateString("fr-FR", options);
   }
 
   function renderCalendar() {
@@ -51,10 +55,11 @@
     const fullDates = calendarData.getFullyBookedDates();
     const fragment = document.createDocumentFragment();
 
-    document.querySelector("#calendar-title").textContent = displayedMonth.toLocaleDateString("fr-FR", {
+    const monthOptions = {
       month: "long",
       year: "numeric"
-    });
+    };
+    document.querySelector("#calendar-title").textContent = i18n?.formatDate(displayedMonth, monthOptions) || displayedMonth.toLocaleDateString("fr-FR", monthOptions);
     document.querySelector("#previous-month").disabled =
       year === minimumDate.getFullYear() && month <= minimumDate.getMonth();
 
@@ -77,11 +82,11 @@
       if (isFull) {
         button.classList.add("is-full");
         button.disabled = true;
-        button.setAttribute("aria-label", `${formatLongDate(date)} — complet`);
+        button.setAttribute("aria-label", `${formatLongDate(date)} — ${t("Complet").toLowerCase()}`);
       } else if (!availableSlots.length) {
         button.classList.add("is-unavailable");
         button.disabled = true;
-        button.setAttribute("aria-label", `${formatLongDate(date)} — indisponible`);
+        button.setAttribute("aria-label", `${formatLongDate(date)} — ${t("Indisponible").toLowerCase()}`);
       } else {
         button.classList.add("is-available");
         button.setAttribute("aria-label", `${formatLongDate(date)} — ${availableSlots.length} créneaux disponibles`);

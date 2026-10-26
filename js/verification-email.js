@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   const state = FinasureStorage.load();
+  const localizedUrl = (url) => window.FinasureI18n?.localizedUrl(url) || url;
   const form = document.querySelector("#otp-form");
   const input = document.querySelector("#otp-code");
   const errorBox = document.querySelector("#otp-error");
@@ -17,12 +18,12 @@
   let timer;
 
   if (window.FINASURE_SUPABASE_CONFIG?.otpBypassForTesting === true) {
-    location.replace("rapport-complet.html");
+    location.replace(localizedUrl("rapport-complet.html"));
     return;
   }
 
   if (!state.questionnaireCompleted || !state.leadFormCompleted || !state.client?.email) {
-    location.replace("resultats.html");
+    location.replace(localizedUrl("resultats.html"));
     return;
   }
   function maskEmail(email) {

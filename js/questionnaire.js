@@ -2,6 +2,8 @@
   "use strict";
 
   const data = window.FINASURE_ERM_DATA;
+  const i18n = window.FinasureI18n;
+  const t = (value) => i18n?.t(value) || value;
   const state = FinasureStorage.load();
   const list = document.querySelector("#questions-list");
   const form = document.querySelector("#questions-form");
@@ -211,12 +213,7 @@
         );
         marker.setAttribute("aria-hidden", "true");
         item.append(marker, label);
-        item.setAttribute(
-          "aria-label",
-          `Étape ${index + 1}, ${
-            index < step ? "terminée" : index === step ? "en cours" : "à venir"
-          }`
-        );
+        item.setAttribute("aria-label", `${t(`Étape ${index + 1}`)}, ${t(index < step ? "terminée" : index === step ? "en cours" : "à venir")}`);
         if (index === step) item.setAttribute("aria-current", "step");
         return item;
       })
@@ -385,7 +382,7 @@
       state.questionnaireCompleted = true;
       state.completedAt = new Date().toISOString();
       persist();
-      location.href = "resultats.html";
+      location.href = i18n?.localizedUrl("resultats.html") || "resultats.html";
     } catch (error) {
       showError(error.message);
     }

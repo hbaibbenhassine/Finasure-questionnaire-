@@ -1,8 +1,9 @@
 (function () {
   "use strict";
   const state = window.FinasureStorage.load();
+  const localizedUrl = (url) => window.FinasureI18n?.localizedUrl(url) || url;
   if (!state.personalizedReportRequested) {
-    location.replace("rapport-complet.html");
+    location.replace(localizedUrl("rapport-complet.html"));
     return;
   }
 
@@ -14,7 +15,7 @@
     countdown.textContent = String(seconds);
     if (seconds <= 0) {
       window.clearInterval(timer);
-      location.href = "rendez-vous.html";
+      location.href = localizedUrl("rendez-vous.html");
     }
   }, 1000);
 

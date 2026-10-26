@@ -5,6 +5,7 @@
   const nav = document.querySelector(".main-nav");
   const form = document.querySelector("#home-start-form");
   const state = window.FinasureStorage.load();
+  const localizedUrl = (url) => window.FinasureI18n?.localizedUrl(url) || url;
 
   menu?.addEventListener("click", () => {
     const open = nav.classList.toggle("is-open");
@@ -52,6 +53,6 @@
       showFieldError("email", "Impossible d’enregistrer vos informations pour le moment..");
       return;
     }
-    window.location.href = "questionnaire.html";
+    window.location.href = localizedUrl("questionnaire.html");
   });
 })();

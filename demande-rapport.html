@@ -6,11 +6,13 @@
   <link rel="icon" type="image/png" href="assets/logo-finasure.png?v=20261012-1">
   <meta http-equiv="refresh" content="0;url=resultats.html">
   <title>Recevoir votre rapport | Finasure</title>
-  <script>location.replace("resultats.html");</script>
+  <script>location.replace(`resultats.html${location.search}${location.hash}`);</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260918-12">
+  <link rel="stylesheet" href="css/style.css?v=20261026-1">
+  <script src="js/i18n/ar.js?v=20261026-1"></script>
+  <script src="js/i18n.js?v=20261026-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>

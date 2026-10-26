@@ -1,6 +1,9 @@
 (async function () {
   "use strict";
   const APPOINTMENT_URL = "rendez-vous.html";
+  const i18n = window.FinasureI18n;
+  const t = (value) => i18n?.t(value) || value;
+  const goTo = (url) => { location.href = i18n?.localizedUrl(url) || url; };
   const data = window.FINASURE_ERM_DATA;
   const maturity = window.FinasureMaturity;
   const state = FinasureStorage.load();
@@ -9,15 +12,15 @@
   const clientValid = state.leadFormCompleted && client.company && client.sector && client.workforce && client.firstName && client.lastName && client.jobTitle && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email || "");
 
   if (!complete || !state.questionnaireCompleted) {
-    location.href = "questionnaire.html";
+    goTo("questionnaire.html");
     return;
   }
   if (!Number.isFinite(Number(state.results?.globalScore))) {
-    location.href = "resultats.html";
+    goTo("resultats.html");
     return;
   }
   if (!clientValid) {
-    location.href = "resultats.html";
+    goTo("resultats.html");
     return;
   }
   const locallyVerified =
@@ -27,7 +30,7 @@
     window.FINASURE_SUPABASE_CONFIG?.otpBypassForTesting === true;
   if (!otpBypassForTesting &&
       (!locallyVerified || !(await window.FinasureOtp.hasVerifiedAccess(state)))) {
-    location.replace("verification-email.html");
+    location.replace(i18n?.localizedUrl("verification-email.html") || "verification-email.html");
     return;
   }
 
@@ -67,7 +70,7 @@
       "report-phone": client.phone || "Non renseigné"
     };
     Object.entries(values).forEach(([id, value]) => { document.getElementById(id).textContent = String(value || ""); });
-    document.querySelector("#report-date").textContent = new Date(state.completedAt).toLocaleDateString("fr-FR");
+    document.querySelector("#report-date").textContent = i18n?.formatDate(new Date(state.completedAt)) || new Date(state.completedAt).toLocaleDateString("fr-FR");
   }
 
   function renderResults() {
@@ -87,9 +90,9 @@
     } else {
       globalLevelElement.textContent = globalLevel.label;
     }
-    document.querySelector("#global-interpretation").textContent = interpretation(results.globalScore);
+    document.querySelector("#global-interpretation").textContent = t(interpretation(results.globalScore));
 
-    document.querySelector("#global-next-step").textContent = globalLevel.nextStep;
+    document.querySelector("#global-next-step").textContent = t(globalLevel.nextStep);
     document.querySelector("#score-progress-bar").style.width = `${results.percentage}%`;
     renderMaturityScale(globalLevel);
     results.strengths.forEach((dimension) => document.querySelector("#strengths").append(rankCard(dimension, false)));
@@ -124,7 +127,10 @@
       element("h3", null, dimension.name),
       element("p", "rank-maturity-badge", `${dimension.displayScore.replace(".", ",")} / 5 · ${level.label}`)
     );
-    if (priority) card.append(element("small", null, `Poids ${dimension.weight} % · Indice ${dimension.priorityIndex.toFixed(2)}`), element("p", null, dimension.recommendations[dimension.level]?.shortTerm || "Recommandation non disponible."));
+    if (priority) {
+      const fallback = dimension.recommendations[dimension.level]?.shortTerm || "Recommandation non disponible.";
+      card.append(element("small", null, `Poids ${dimension.weight} % · Indice ${dimension.priorityIndex.toFixed(2)}`), element("p", null, i18n?.recommendation(dimension.id, fallback) || fallback));
+    }
     else card.append(element("p", null, "Une base solide sur laquelle capitaliser pour renforcer le dispositif global."));
     return card;
   }
@@ -208,7 +214,7 @@
       state.personalizedReportRequestedAt = new Date().toISOString();
       state.personalizedReportNotificationSent = Boolean(response.notification_sent);
       window.FinasureStorage.save(state);
-      location.href = "demande-rapport-confirmee.html";
+      goTo("demande-rapport-confirmee.html");
     } catch (error) {
       errorBox.textContent = error.message;
       errorBox.hidden = false;
@@ -218,5 +224,5 @@
       errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   });
-  document.querySelector("#appointment-button").addEventListener("click", () => { location.href = APPOINTMENT_URL; });
+  document.querySelector("#appointment-button").addEventListener("click", () => { goTo(APPOINTMENT_URL); });
 })();

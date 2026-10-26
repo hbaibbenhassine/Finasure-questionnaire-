@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   const data = window.FINASURE_ERM_DATA;
+  const localizedUrl = (url) => window.FinasureI18n?.localizedUrl(url) || url;
   const state = FinasureStorage.load();
   const form = document.querySelector("#complement-form");
   const complete = data?.questions?.every((question) => {
@@ -10,7 +11,7 @@
 
   if (!complete || !state.questionnaireCompleted) {
     sessionStorage.setItem("finasureNotice", "Certaines réponses sont manquantes. Veuillez terminer le questionnaire.");
-    location.href = "questionnaire.html";
+    location.href = localizedUrl("questionnaire.html");
     return;
   }
 
@@ -64,7 +65,7 @@
       showPageError("Les informations n’ont pas pu être enregistrées. Veuillez réessayer.");
       return;
     }
-    location.href = "rapport-complet.html";
+    location.href = localizedUrl("rapport-complet.html");
   });
 
   function addError(name, message, currentInvalid) {

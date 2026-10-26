@@ -515,3 +515,37 @@
 @media(max-width:700px){.score-target{top:22px;right:20px;width:74px;height:74px;stroke-width:5.5}}
 /* Carte score sans cible décorative. */
 .report-score-layout>.global-result::before,.report-score-layout>.global-result::after{content:none!important}
+
+/* Internationalisation : sélecteur compact et adaptation RTL sans modifier la grille. */
+.language-switcher{display:inline-flex;align-items:center;gap:3px;margin-inline-start:auto;margin-inline-end:18px;padding:3px;border:1px solid #dce7ed;border-radius:999px;background:#f6fafc;direction:ltr}
+.language-switcher button{min-width:38px;height:30px;padding:0 9px;border:0;border-radius:999px;background:transparent;color:#536579;font:700 12px/1 "DM Sans",sans-serif;cursor:pointer;transition:background-color .2s,color .2s,box-shadow .2s}
+.language-switcher button:hover{color:var(--navy);background:#e8f5f9}
+.language-switcher button.is-active{color:#fff;background:var(--navy);box-shadow:0 3px 8px rgba(7,27,51,.18)}
+.language-switcher button:focus-visible{outline:3px solid rgba(0,169,212,.3);outline-offset:2px}
+
+html[dir="rtl"] body{font-family:Tahoma,"Noto Sans Arabic","DM Sans",sans-serif;text-align:right}
+html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3,html[dir="rtl"] .button{font-family:Tahoma,"Noto Sans Arabic","Manrope",sans-serif;letter-spacing:0}
+html[dir="rtl"] .main-nav,html[dir="rtl"] .hero-actions,html[dir="rtl"] .questionnaire-actions,html[dir="rtl"] .fixed-action-bar-inner{direction:rtl}
+html[dir="rtl"] .home-hero-copy,html[dir="rtl"] .questionnaire-hero-copy,html[dir="rtl"] #questions-list,html[dir="rtl"] .question-category,html[dir="rtl"] .question-card,html[dir="rtl"] .appointment-page,html[dir="rtl"] .report-section{text-align:right}
+html[dir="rtl"] .questionnaire-benefits article{border-right:0;border-left:1px solid var(--line);text-align:right}
+html[dir="rtl"] .questionnaire-benefits article:first-child{padding-left:20px;padding-right:0}
+html[dir="rtl"] .questionnaire-benefits article:last-child{border-left:0;padding-left:0;padding-right:20px}
+html[dir="rtl"] .questionnaire-confidentiality{border-left:0;border-right:3px solid var(--cyan)}
+html[dir="rtl"] .answer-option{grid-template-columns:17px minmax(0,1fr)}
+html[dir="rtl"] .answer-option label{text-align:right}
+html[dir="rtl"] .answer-name{margin-right:0;margin-left:12px}
+html[dir="rtl"] .accordion-button{text-align:right}
+html[dir="rtl"] .rank-card{border-left:1px solid var(--line);border-right:4px solid #42b779}
+html[dir="rtl"] .priorities .rank-card{border-right-color:#f2a93b}
+html[dir="rtl"] .report-strengths-block .rank-card{padding-left:0;padding-right:40px;border-right:0}
+html[dir="rtl"] .report-strengths-block .rank-card::before{left:auto;right:0}
+html[dir="rtl"] .report-analysis-grid .report-strengths-block .rank-card{padding-left:0;padding-right:38px}
+html[dir="rtl"] .report-cover-copy{left:auto;right:0}
+html[dir="rtl"] .report-score-layout #global-level::before{content:"المستوى: ";font-family:Tahoma,"Noto Sans Arabic",sans-serif}
+html[dir="rtl"] .maturity-scale-marker{transform:translateX(50%)}
+html[dir="rtl"] input[type="email"],html[dir="rtl"] input[type="tel"],html[dir="rtl"] .otp-input{direction:ltr;text-align:right}
+html[dir="rtl"] .calendar-weekdays,html[dir="rtl"] .calendar-grid{direction:rtl}
+
+@media(max-width:800px){.language-switcher{margin-inline-end:10px}.language-switcher button{min-width:34px;padding:0 7px;font-size:11px}}
+@media(max-width:420px){.language-switcher{margin-inline-end:6px}.language-switcher button{min-width:31px;height:28px;padding:0 6px}.language-switcher button[lang="ar"]{font-size:0}.language-switcher button[lang="ar"]::after{content:"AR";font-size:11px}}
+@media print{.language-switcher{display:none!important}html[dir="rtl"] .report-section,html[dir="rtl"] .report-cover-copy{text-align:right}}
