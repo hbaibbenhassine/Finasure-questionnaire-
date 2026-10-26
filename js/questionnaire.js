@@ -172,15 +172,14 @@
     };
     const section = createElement("section", "question-category");
     section.dataset.dimension = dimensionId;
-    const heading = createElement(
-      "h2",
-      "question-category-title",
-      `${details.number}. ${details.title}`
-    );
+    const heading = createElement("h2", "question-category-title");
+    const number = createElement("span", "question-category-number", `${details.number}.`);
+    const title = createElement("span", "question-category-name", t(details.title.trim()));
+    heading.append(number, document.createTextNode(" "), title);
     const description = createElement(
       "p",
       "question-category-description",
-      details.description
+      t(details.description)
     );
     section.append(heading, description);
     return section;

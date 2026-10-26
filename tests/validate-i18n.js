@@ -40,7 +40,7 @@ publicPages.forEach((page) => {
   const runtimePosition = html.indexOf("js/i18n.js");
   assert(catalogPosition >= 0, `${page}: catalogue arabe absent.`);
   assert(runtimePosition > catalogPosition, `${page}: le runtime i18n doit être chargé après le catalogue.`);
-  assert(html.includes("css/style.css?v=20261026-1"), `${page}: version CSS i18n absente.`);
+  assert(html.includes("css/style.css?v=20261026-3"), `${page}: version CSS i18n absente.`);
 });
 
 console.log(`i18n valide : ${publicPages.length} pages, ${data.questions.length} questions et ${data.dimensions.length} dimensions couvertes.`);

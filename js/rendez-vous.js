@@ -15,6 +15,9 @@
   let selectedDate = null;
   let selectedSlot = "";
 
+  document.querySelector("#previous-month").textContent = i18n?.isRtl ? "→" : "←";
+  document.querySelector("#next-month").textContent = i18n?.isRtl ? "←" : "→";
+
   const assessmentComplete = questionnaireData?.questions?.every((question) => {
     const answer = Number(state.answers[question.id]);
     return answer >= 1 && answer <= 5;

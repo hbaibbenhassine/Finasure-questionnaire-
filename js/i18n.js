@@ -180,7 +180,7 @@
   }
 
   function formatDate(value, options) {
-    return new Intl.DateTimeFormat(locale === "ar" ? "ar-MA" : "fr-FR", options).format(value);
+    return new Intl.DateTimeFormat(locale === "ar" ? "ar-TN" : "fr-FR", options).format(value);
   }
 
   function recommendation(dimensionId, fallback) {

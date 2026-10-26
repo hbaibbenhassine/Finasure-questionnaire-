@@ -44,6 +44,8 @@
 .question-category{margin:34px 0 2px;padding:0 0 16px;border-bottom:1px solid var(--line)}
 .question-category:first-child{margin-top:14px}
 .question-category-title{margin:0 0 7px;color:var(--navy);font:800 clamp(19px,2.2vw,26px)/1.25 "Manrope",sans-serif;letter-spacing:-.02em;text-transform:uppercase}
+.question-category-number{display:inline-block;margin-inline-end:.18em;direction:ltr}
+.question-category-name{display:inline}
 .question-category-description{max-width:980px;margin:0;color:#5d7083;font-size:14px;line-height:1.6}
 .question-meta{display:none}
 .question-title{margin:0 0 14px;color:#111;font:500 19px/1.45 "DM Sans",sans-serif;letter-spacing:0}
@@ -540,7 +542,7 @@ html[dir="rtl"] .priorities .rank-card{border-right-color:#f2a93b}
 html[dir="rtl"] .report-strengths-block .rank-card{padding-left:0;padding-right:40px;border-right:0}
 html[dir="rtl"] .report-strengths-block .rank-card::before{left:auto;right:0}
 html[dir="rtl"] .report-analysis-grid .report-strengths-block .rank-card{padding-left:0;padding-right:38px}
-html[dir="rtl"] .report-cover-copy{left:auto;right:0}
+html[dir="rtl"] .report-cover-copy{left:auto;right:auto;margin-left:0;margin-right:auto;text-align:right}
 html[dir="rtl"] .report-score-layout #global-level::before{content:"المستوى: ";font-family:Tahoma,"Noto Sans Arabic",sans-serif}
 html[dir="rtl"] .maturity-scale-marker{transform:translateX(50%)}
 html[dir="rtl"] input[type="email"],html[dir="rtl"] input[type="tel"],html[dir="rtl"] .otp-input{direction:ltr;text-align:right}
